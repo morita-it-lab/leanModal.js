@@ -7,12 +7,14 @@
 			var defaults = {
 				top: 100,
 				overlay: 0.5,
-				closeButton: null
+				closeButton: null,
+				closeClickOverlay: true,
 			}
 
-			var overlay = $("<div id='lean_overlay'></div>");
-
-			$("body").append(overlay);
+			if ($("#lean_overlay").size() == 0) {
+				var overlay_tag = $("<div id='lean_overlay'></div>");
+				$("body").append(overlay_tag);
+			}
 
 			options =  $.extend(defaults, options);
 
@@ -25,7 +27,9 @@
 					var modal_id = $(this).attr("href");
 
 					$("#lean_overlay").click(function() {
-						close_modal(modal_id);
+						if (o.closeClickOverlay) {
+							close_modal(modal_id);
+						}
 					});
 
 					$(o.closeButton).click(function() {
@@ -37,7 +41,7 @@
 
 					$('#lean_overlay').css({ 'display' : 'block', opacity : 0 });
 
-					$('#lean_overlay').fadeTo(200,o.overlay);
+					$('#lean_overlay').fadeTo(200, o.overlay);
 
 					$(modal_id).css({
 
@@ -51,7 +55,7 @@
 
 					});
 
-					$(modal_id).fadeTo(200,1);
+					$(modal_id).fadeTo(200, 1);
 
 					e.preventDefault();
 
@@ -59,7 +63,7 @@
 
 			});
 
-			function close_modal(modal_id){
+			function close_modal(modal_id) {
 
 				$("#lean_overlay").fadeOut(200);
 
